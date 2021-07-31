@@ -3,5 +3,7 @@ Tool for detection individuals in violent riot from the crowd
 
 installation:
 >py -m pip install pillow
->>py -m pip install opencv-contrib-python
+>py -m pip install opencv-contrib-python
 >py -m pip install image
+
+For mp4 inputs, please put the mp4 inside new_skynet directory

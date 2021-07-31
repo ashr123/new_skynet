@@ -11,6 +11,10 @@ HOST, PORT = "localhost", 8080
 
 class CamHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
+		if self.path.endswith('notification'):
+			print("GOT notification")
+			#do some UI logic
+			return
 		if self.path.endswith('.mjpg'):
 			self.send_response(200)
 			self.send_header('Content-type','multipart/x-mixed-replace; boundary=jpgboundary')
@@ -33,6 +37,24 @@ class CamHandler(BaseHTTPRequestHandler):
 				except KeyboardInterrupt:
 					break
 			return
+		if self.path.endswith('.jpg'):
+			self.send_response(200)
+			self.send_header('Content-type','multipart/x-mixed-replace; boundary=jpgboundary')
+			self.end_headers()
+			try:
+				rc,img = capture.read()
+				imgRGB=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+				jpg = Image.fromarray(imgRGB)
+				tmpFile = StringIO.StringIO()
+				jpg.save(tmpFile,'JPEG')
+				self.wfile.write("\r\n--jpgboundary\r\n")
+				self.send_header('Content-type','image/jpeg')
+				self.send_header('Content-length',str(tmpFile.len))
+				self.end_headers()
+				jpg.save(self.wfile,'JPEG')
+			except KeyboardInterrupt:
+				print("BREAK")
+			return
 		if self.path.endswith('.html'):
 			imageStr = '<img src="http://{}:{}/cam.mjpg"/>'.format(HOST, PORT)
 			self.send_response(200)
@@ -49,7 +71,13 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 
 def main():
 	global capture
-	capture = cv2.VideoCapture(0)
+	# 0 means USB camera,
+	# can also be mjpeg camera with: 'http://wmccpinetop.axiscam.net/mjpg/video.mjpg'
+	# or ip camera with 'rtsp://192.168.1.64/1'
+	# or file with 'test.mp4'
+	pipe = 0
+
+	capture = cv2.VideoCapture(pipe)
 	global img
 	try:
 		server = ThreadedHTTPServer((HOST, PORT), CamHandler)
