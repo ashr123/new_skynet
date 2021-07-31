@@ -8,6 +8,7 @@ import StringIO
 import time
 capture=None
 HOST, PORT = "localhost", 8080
+MJPEG_SLEEP_INTERVAL=0.05
 
 class CamHandler(BaseHTTPRequestHandler):
 	def do_GET(self):
@@ -33,7 +34,7 @@ class CamHandler(BaseHTTPRequestHandler):
 					self.send_header('Content-length',str(tmpFile.len))
 					self.end_headers()
 					jpg.save(self.wfile,'JPEG')
-					time.sleep(0.05)
+					time.sleep(MJPEG_SLEEP_INTERVAL)
 				except KeyboardInterrupt:
 					break
 			return

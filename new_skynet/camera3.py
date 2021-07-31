@@ -6,7 +6,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
 import time
 import sys
-
+FPS=1
+HOST, PORT = "localhost", 8080
 
 class CamHandler(BaseHTTPRequestHandler):
 	def __init__(self, request, client_address, server):
@@ -92,7 +93,7 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 #			pass
 		self._capture_path = capture_path
 		fps = 30
-		self.read_delay = 1. / fps
+		self.read_delay = int(FPS)/ fps
 		self._lock = threading.Lock()
 		self._camera = cv2.VideoCapture(capture_path)
 
@@ -126,7 +127,7 @@ def main():
 		#pipe = 0
 		pipe='bunny.mp4'
 
-	server = ThreadedHTTPServer(pipe, ('127.0.0.1', 8080), CamHandler)
+	server = ThreadedHTTPServer(pipe, (HOST, PORT), CamHandler)
 	print("server started")
 	server.serve_forever()
 
