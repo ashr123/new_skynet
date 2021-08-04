@@ -4,14 +4,15 @@ import json
 import os
 
 class ColabRequestClass():
+    colabUrl=None
     def __init__(self):
+        colabUrl = ColabRequestClass.getColabURL()
         print('loading ColabRequestClass')
 
     @staticmethod
     def getColabURL():
         try:
             r = requests.get('https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test')
-            print(r.status_code, r.reason)
             if r.status_code == 200:
                 if r.text == "":
                     print("error getting address, using env var")
@@ -31,8 +32,10 @@ class ColabRequestClass():
         #data = json.dumps(data)
         #r = requests.post('https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test', data)
         #test = json.loads(r.text)
-        colabUrl = ColabRequestClass.getColabURL()
-        fullLink = """{}/sendPicture2""".format(colabUrl)
+        #colabUrl = ColabRequestClass.getColabURL()
+        if ColabRequestClass.colabUrl == None:
+            return None
+        fullLink = """{}/sendPicture""".format(ColabRequestClass.colabUrl)
         data = {'picture': picture}
         data = json.dumps(data)
         try:
@@ -53,8 +56,10 @@ class ColabRequestClass():
 
     @staticmethod
     def checkNotification():
-        colabUrl = ColabRequestClass.getColabURL()
-        fullLink = """{}/checkNotifications""".format(colabUrl)
+        #colabUrl = ColabRequestClass.getColabURL()
+        if ColabRequestClass.colabUrl == None:
+            return None
+        fullLink = """{}/checkNotifications""".format(ColabRequestClass.colabUrl)
         try:
             # 7 seconde timeout
             result = requests.get(fullLink)
