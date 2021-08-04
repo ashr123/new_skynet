@@ -2,6 +2,7 @@
 import requests
 import json
 import os
+import base64
 
 class ColabRequestClass():
     colabUrl=None
@@ -18,6 +19,7 @@ class ColabRequestClass():
                     print("error getting address, using env var")
                     return os.environ.get('ngrokAddr')
                 else:
+                    ColabRequestClass.colabUrl = r.text
                     return r.text
             else:
                 return None
@@ -26,7 +28,7 @@ class ColabRequestClass():
             return os.environ.get('ngrokAddr')
 
     @staticmethod
-    def sendPicture(picture):
+    def sendPicture(jpg):
         #testing upload address post
         #data = {'ngrokAddr': "blabla"}
         #data = json.dumps(data)
@@ -36,11 +38,18 @@ class ColabRequestClass():
         if ColabRequestClass.colabUrl == None:
             return None
         fullLink = """{}/sendPicture""".format(ColabRequestClass.colabUrl)
-        data = {'picture': picture}
-        data = json.dumps(data)
+
+        jpg_bytes = jpg.tobytes()
+        #headers = {"Content-type": 'multipart/x-mixed-replace; boundary=--jpgboundary'}
+        #self.wfile.write("--jpgboundary\r\n".encode())
+
+        im_b64 = base64.b64encode(jpg_bytes).decode("utf8")
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        data = json.dumps({"image": im_b64, "other_key": "value"})
+
         try:
             #7 seconde timeout
-            result = requests.post(fullLink, data, 7)
+            result = requests.post(url = fullLink, headers = headers, data = data, timeout = 7)
             if result.ok == True and result.status_code == 200:
                 resultJson = json.loads(result.text)
                 answer = resultJson['answer']
@@ -70,8 +79,8 @@ class ColabRequestClass():
                 print(answer)
                 return answer
             else:
-                print("error sending picture to colab server")
+                print("error getting notifications from colab server")
                 return None
         except (IOError, ConnectionError):
-            print("error sending picture to colab server")
+            print("error getting notifications from colab server")
             return None

@@ -162,12 +162,6 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
 def on_open(ws):
     print('websocket opened')
     createWSRequest(ws)
-    createWSRequest(ws)
-    createWSRequest(ws)
-    createWSRequest(ws)
-    createWSRequest(ws)
-    createWSRequest(ws)
-    createWSRequest(ws)
 
 def on_error(ws, error):
     print('websocket error')
