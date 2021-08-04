@@ -9,18 +9,19 @@
 from PyQt5.QtCore import QDir, Qt, QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel,
-        QPushButton, QSizePolicy, QSlider, QStyle, QVBoxLayout, QWidget)
+from PyQt5 import QtWidgets
+# import (QApplication, QFileDialog, QHBoxLayout, QLabel,
+#         QPushButton, QSizePolicy, QSlider, QStyle, QVBoxLayout, QWidget)
 from PyQt5.QtWidgets import QMainWindow,QWidget, QPushButton, QAction
 from PyQt5.QtGui import QIcon
 import sys
 from main_window_ui import Ui_MainWindow
 
-class VideoWindow(QMainWindow, Ui_MainWindow):
+class VideoWindow(QtWidgets.i, Ui_MainWindow):
 
     def __init__(self, parent=None):
         super(VideoWindow, self).__init__(parent)
-        self.setWindowTitle("PyQt Video Player Widget Example - pythonprogramminglanguage.com")
+        # self.setWindowTitle("PyQt Video Player Widget Example - pythonprogramminglanguage.com")
 
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
 
@@ -31,13 +32,13 @@ class VideoWindow(QMainWindow, Ui_MainWindow):
         self.playButton.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.playButton.clicked.connect(self.play)
 
-        self.positionSlider = QSlider(Qt.Horizontal)
+        self.positionSlider = QtWidgets.QSlider(Qt.Horizontal)
         self.positionSlider.setRange(0, 0)
         self.positionSlider.sliderMoved.connect(self.setPosition)
 
-        self.errorLabel = QLabel()
-        self.errorLabel.setSizePolicy(QSizePolicy.Preferred,
-                QSizePolicy.Maximum)
+        self.errorLabel = QtWidgets.QLabel()
+        self.errorLabel.setSizePolicy(QtWidgets.QSizePolicy.Preferred,
+                QtWidgets.QSizePolicy.Maximum)
 
         # Create new action
         openAction = QAction(QIcon('open.png'), '&Open', self)
@@ -63,12 +64,12 @@ class VideoWindow(QMainWindow, Ui_MainWindow):
         self.setCentralWidget(wid)
 
         # Create layouts to place inside widget
-        controlLayout = QHBoxLayout()
+        controlLayout = QtWidgets.QHBoxLayout()
         controlLayout.setContentsMargins(0, 0, 0, 0)
         controlLayout.addWidget(self.playButton)
         controlLayout.addWidget(self.positionSlider)
 
-        layout = QVBoxLayout()
+        layout = QtWidgets.QVBoxLayout()
         layout.addWidget(videoWidget)
         layout.addLayout(controlLayout)
         layout.addWidget(self.errorLabel)
@@ -83,7 +84,7 @@ class VideoWindow(QMainWindow, Ui_MainWindow):
         self.mediaPlayer.error.connect(self.handleError)
 
     def openFile(self):
-        fileName, _ = QFileDialog.getOpenFileName(self, "Open Movie",
+        fileName, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Open Movie",
                 QDir.homePath())
 
         if fileName != '':
@@ -103,10 +104,10 @@ class VideoWindow(QMainWindow, Ui_MainWindow):
     def mediaStateChanged(self, state):
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.playButton.setIcon(
-                    self.style().standardIcon(QStyle.SP_MediaPause))
+                    self.style().standardIcon(QtWidgets.QStyle.SP_MediaPause))
         else:
             self.playButton.setIcon(
-                    self.style().standardIcon(QStyle.SP_MediaPlay))
+                    self.style().standardIcon(QtWidgets.QStyle.SP_MediaPlay))
 
     def positionChanged(self, position):
         self.positionSlider.setValue(position)
@@ -122,7 +123,7 @@ class VideoWindow(QMainWindow, Ui_MainWindow):
         self.errorLabel.setText("Error: " + self.mediaPlayer.errorString())
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     player = VideoWindow()
     player.resize(640, 480)
     player.show()

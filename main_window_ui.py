@@ -13,11 +13,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1356, 695)
+    def setupUi(self):
+        self.setObjectName("MainWindow")
+        self.resize(1356, 695)
         # Setting contextMenuPolicy
-        MainWindow.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
+        self.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
         # MainWindow.setDockOptions(QtWidgets.QMainWindow.AllowTabbedDocks | QtWidgets.QMainWindow.AnimatedDocks)
         # MainWindow.setStyleSheet("#toolBar_Devices QToolButton {\n"
         #                          "width: 50px;\n"
@@ -34,19 +34,19 @@ class Ui_MainWindow(object):
         #                          "}\n"
         #                          "\n"
         #                          "")
-        self.uiCentralWidget = QtWidgets.QWidget(MainWindow)
-        self.uiCentralWidget = QtWidgets.QLabel("Hello, World")
-        self.uiCentralWidget.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
+        self.uiCentralWidget = QtWidgets.QWidget(self)
+        # self.uiCentralWidget = QtWidgets.QLabel("Hello, World")
+        # self.uiCentralWidget.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.uiCentralWidget.setObjectName("uiCentralWidget")
-        MainWindow.setCentralWidget(self.uiCentralWidget)
+        self.setCentralWidget(self.uiCentralWidget)
 
-        MainWindow.setWindowModality(QtCore.Qt.NonModal)
+        self.setWindowModality(QtCore.Qt.NonModal)
 
 
 
         ####### adding a menu bar
-        menuBar = QtWidgets.QMenuBar(MainWindow)
-        MainWindow.setMenuBar(menuBar)
+        menuBar = QtWidgets.QMenuBar(self)
+        self.setMenuBar(menuBar)
         # Creating menus using a title
         fileMenu = menuBar.addMenu("&File")
         editMenu = menuBar.addMenu("&Edit")
@@ -70,51 +70,51 @@ class Ui_MainWindow(object):
         self.uiToolBar = QtWidgets.QToolBar(self.uiCentralWidget)
         self.uiToolBar.setIconSize(QtCore.QSize(70, 40))
         self.uiToolBar.setObjectName("menuToolBar")
-        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.uiToolBar)
+        self.addToolBar(QtCore.Qt.TopToolBarArea, self.uiToolBar)
         #add button functionality
         self.uiToolBar.addAction(self.uiHomePageAction)
         self.uiToolBar.addSeparator()
 
+        ######### events scroll area
+        self.eventsScrollArea = QtWidgets.QScrollArea(self.uiCentralWidget)
+        self.eventsScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.eventsScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        # (width,height_top ,width, height_bottom)
+        self.eventsScrollArea.setGeometry(QtCore.QRect(1205, -2, 150, 625))
+        self.eventsScrollArea.setWidgetResizable(True)
+        self.eventsScrollArea.setObjectName("eventsScrollArea")
+        self.eventsScrollAreaWidgetContents = QtWidgets.QWidget()
+        self.eventsScrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 309, 549))
+        self.eventsScrollAreaWidgetContents.setObjectName("eventsScrollAreaWidgetContents")
+        self.eventsScrollArea.setFocusPolicy(QtCore.Qt.NoFocus)
 
-        self.scrollArea = QtWidgets.QScrollArea(self.uiCentralWidget)
-        self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
-        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.scrollArea.setGeometry(QtCore.QRect(1045, 0, 311, 625))
-        self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setObjectName("scrollArea")
-        self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 309, 549))
-        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        # self.scrollArea.setWidget(self.scrollAreaWidgetContents)
-        self.scrollArea.setFocusPolicy(QtCore.Qt.NoFocus)
-        # self.eventToolBar.addWidget(self.scrollArea)
-
-
-
-
-
-        # self.widget_video = QVideoWidget(self.uiCentralWidget)
-        # self.widget_video.setGeometry(QtCore.QRect(10, 160, 471, 241))
-        # self.widget_video.setObjectName("widget_video")
-        # MainWindow.setCentralWidget(self.uiCentralWidget)
-        # self.menubar = QtWidgets.QMenuBar(MainWindow)
-        # self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
-        # self.menubar.setObjectName("menubar")
-        # MainWindow.setMenuBar(self.menubar)
-        #
-        #
-        # self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        # self.statusbar.setObjectName("statusbar")
-        # MainWindow.setStatusBar(self.statusbar)
-
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        ########### event data scroll area
+        self.eventDataScrollArea = QtWidgets.QScrollArea(self.uiCentralWidget)
+        # self.eventDataScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        self.eventDataScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        # (width,height_top ,width, height_bottom)
+        self.eventDataScrollArea.setGeometry(QtCore.QRect(780, -2, 426, 625))
+        self.eventDataScrollArea.setWidgetResizable(True)
+        self.eventDataScrollArea.setObjectName("eventDataScrollArea")
+        self.eventDataScrollAreaWidgetContent = QtWidgets.QWidget()
+        self.eventDataScrollAreaWidgetContent.setGeometry(QtCore.QRect(0, 0, 309, 549))
+        self.eventDataScrollAreaWidgetContent.setObjectName("eventDataScrollAreaWidgetContent")
+        self.eventDataScrollArea.setFocusPolicy(QtCore.Qt.NoFocus)
 
 
+        ##### making the video player
+        # self.video_output = self.makeVideoWidget()
 
-    def retranslateUi(self, MainWindow):
+        self.videoLayoutArea = QtWidgets.QVBoxLayout(self.uiCentralWidget)
+        # self.widget_video.setLayout(self.videoLayoutArea)
+        # self.videoLayoutArea.setGeometry(QtCore.QRect(10, 160, 471, 241))
+
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
+
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Riot-AI"))
+        self.setWindowTitle(_translate("MainWindow", "Riot-AI"))
 
         # self.eventToolBar.setText(_translate("eventToolBar", "eventToolBar"))
         # self.uiToolBar.setText(_translate("uiToolBar", "menuToolBar"))
@@ -124,11 +124,11 @@ class Ui_MainWindow(object):
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from event_summary_view import EventSummaryView
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+# if __name__ == "__main__":
+#     import sys
+#     app = QtWidgets.QApplication(sys.argv)
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())

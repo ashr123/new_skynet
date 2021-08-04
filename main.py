@@ -6,7 +6,7 @@ from main_window import MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 import sys
 from main_window_ui import Ui_MainWindow
-from  main_window import MainWindow
+from main_window import MainWindow
 
 def main():
     # parser = argparse.ArgumentParser()
@@ -31,6 +31,8 @@ def start():
     mainwindow.show()
 
     sys.exit(app.exec_())
+
+
 
 
 
