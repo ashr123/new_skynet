@@ -12,6 +12,7 @@ from flask_ngrok import run_with_ngrok
 from threading import Thread
 from time import sleep
 
+#ngrokURI = !curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p'
 
 def threaded_function():
     sleep(10)
@@ -42,7 +43,10 @@ def checkMyAddress():
         checkMyAddress()
     else:
         # Website is up
-        ngrokURI = !curl - -silent - -show - error http://127.0.0.1:4040/api/tunnels | sed - nE
+        ngrokURI = !curl - -silent - -show - error
+        http: // 127.0
+        .0
+        .1: 4040 / api / tunnels | sed - nE
         's/.*public_url":"https:..([^"]*).*/\1/p'
         ngrokURI = """http://{}""".format(ngrokURI[0])
         print(ngrokURI)
@@ -68,7 +72,7 @@ def hi():
 
 @app.route("/checkNotifications")
 def checkNotifications():
-    dictToReturn = {'answer': 42}
+    dictToReturn = {'answer': 'Notification'}
     return jsonify(dictToReturn)
 
 
@@ -82,10 +86,11 @@ def sendPicture():
     input_json = request.get_json(force=True)
     # force=True, above, is necessary if another developer
     # forgot to set the MIME type to 'application/json'
-    print('data from client:')
-    print(input_json)
+    frameId = input_json['frameId']
+    print("""picture {} arrived""".format(frameId))
+    imageBytesArray = input_json['image']
     sleep(5)
-    dictToReturn = {'answer': 42}
+    dictToReturn = {'answer': 'Picture result'}
     return jsonify(dictToReturn)
 
 
