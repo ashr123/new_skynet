@@ -28,7 +28,7 @@ class ColabRequestClass():
             return os.environ.get('ngrokAddr')
 
     @staticmethod
-    def sendPicture(jpg):
+    def sendPicture(jpg, frameId):
         #testing upload address post
         #data = {'ngrokAddr': "blabla"}
         #data = json.dumps(data)
@@ -45,7 +45,7 @@ class ColabRequestClass():
 
         im_b64 = base64.b64encode(jpg_bytes).decode("utf8")
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        data = json.dumps({"image": im_b64, "other_key": "value"})
+        data = json.dumps({"image": im_b64, "frameId": frameId})
 
         try:
             #7 seconde timeout

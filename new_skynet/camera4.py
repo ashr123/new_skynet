@@ -32,8 +32,11 @@ class CameraClass():
         return img
 
     def get_picture(self):
+        self._frameId = self._frameId + 1
         img = self.read_frame()
         retval, jpg = cv2.imencode('.jpg', img)
         if not retval:
             raise RuntimeError('Could not encode img to JPEG')
-        return jpg
+        if self._frameId > 10000:
+            self._frameId = 1
+        return jpg, self._frameId
