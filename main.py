@@ -7,6 +7,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 import sys
 from main_window_ui import Ui_MainWindow
 from main_window import MainWindow
+from colabreq import ColabRequestClass
 
 def main():
     # parser = argparse.ArgumentParser()
@@ -25,6 +26,8 @@ def start():
     # mainwindow = MainWindow()
     # mainwindow.show()
 
+    ColabRequestClass.sendPicture("sdfsdfsdfsdf")
+    ColabRequestClass.checkNotification()
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
     mainwindow = MainWindow()

@@ -50,18 +50,29 @@ def checkMyAddress():
         ngrokURI = """http://{}""".format(ngrokURI[0])
         print(ngrokURI)
 
+        data = {'ngrokAddr': ngrokURI}
+        data = json.dumps(data)
+
+        r = requests.post('https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test', data)
+        if r.status_code == 200 and r.ok == True:
+            result = json.loads(r.text)
+            if result['body'] != ngrokURI:
+                print('uploading ngrok address failed')
+            else:
+                print('uploading ngrok address worked')
+        else:
+            print('uploading ngrok address failed')
+
 
 @app.route("/")
 def hi():
     return "Welcome"
 
 
-@app.route("/sendPicture1")
-def hello():
-    global mypicture
-    mypicture = "lalalallalala"
-    # time.sleep(2)
-    return "Picture recived"
+@app.route("/checkNotifications")
+def checkNotifications():
+    dictToReturn = {'answer': 42}
+    return jsonify(dictToReturn)
 
 
 @app.route("/predictionResult")
@@ -69,19 +80,20 @@ def getPredictionFromMemory():
     return mypicture
 
 
-@app.route('/sendPicture2', methods=['POST'])
-def my_test_endpoint():
+@app.route('/sendPicture', methods=['POST'])
+def sendPicture():
     input_json = request.get_json(force=True)
-    # force=True, above, is necessary if another developer 
+    # force=True, above, is necessary if another developer
     # forgot to set the MIME type to 'application/json'
     print('data from client:')
     print(input_json)
+    sleep(5)
     dictToReturn = {'answer': 42}
     return jsonify(dictToReturn)
 
 
-def test():
-    print('hi')
+def welcome():
+    print('Welcome!')
 
 
 if __name__ == '__main__':
@@ -90,4 +102,4 @@ if __name__ == '__main__':
     app.run()
 
     # If address is in use, may need to terminate other sessions:
-    # Runtime > Manage Sessions > Terminate Other Session
+    # Runtime > Manage Sessions > Terminate Other Sessions
