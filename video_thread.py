@@ -76,8 +76,8 @@ class VideoApp(QWidget):
         return QPixmap.fromImage(p)
 
 #
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     a = App()
-#     a.show()
-#     sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    a = App()
+    a.show()
+    sys.exit(app.exec_())

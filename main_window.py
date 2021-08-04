@@ -14,7 +14,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.riot_event_counter = 0
         self.riot_events = dict()
 
-        self._connections()
         # event = QtWidgets.QLabel("Event 1")
         event1 = {
             "event_name": "Event {}".format(self.riot_event_counter+1),
@@ -24,70 +23,75 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "event_name": "Event {}".format(self.riot_event_counter + 2),
             "event_data": "Event number: {}\nDate: 4.8.2021 20:36".format(self.riot_event_counter)
         }
+
+
         self.currentEvents.append(event1)
-        self._addEventsToolBarActionSlot(event1)
-        self.create_event_button(event1)
-        self.create_event_button(event2)
-        self.creadVideoThreadWidget()
+       #### creating the events layout area:
+        self.eventsLayoutArea = QtWidgets.QVBoxLayout(self.eventsScrollAreaWidgetContents)
+        self.eventsLayoutArea.addItem(
+            QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
+        self.eventsScrollArea.setWidget(self.eventsScrollAreaWidgetContents)
+
+
+        self._connections()
+
+        # self.create_event_button(event1)
+        # self.create_event_button(event2)
+        # self.creadVideoThreadWidget()
+
 
 
     def creadVideoThreadWidget(self):
         self.video_output = VideoApp()
-        self.videoLayoutArea = QtWidgets.QVBoxLayout(self.uiCentralWidget)
-        self.videoLayoutArea.addWidget(self.video_output)
+        # self.videoLayoutArea = QtWidgets.QVBoxLayout(self.uiCentralWidget)
+        # self.videoLayoutArea.addWidget(self.video_output)
 
     def create_event_layout_container(self):
-        self.eventsLayoutArea = QtWidgets.QVBoxLayout()
-        # self.eventsScrollAreaWidgetContents.setLayout(self.eventsLayoutArea)
-        # self.scrollAreaWidgetContents.setLayout(self.eventLayoutArea)
+        self.eventsLayoutArea = QtWidgets.QVBoxLayout(self.eventsScrollAreaWidgetContents)
+        self.eventsLayoutArea.addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
         self.eventsScrollArea.setWidget(self.eventsScrollAreaWidgetContents)
 
     def create_eventData_layout_container(self):
-        self.eventDataLayoutArea = QtWidgets.QVBoxLayout()
-        self.eventDataScrollAreaWidgetContent.setLayout(self.eventDataLayoutArea)
-        # self.scrollAreaWidgetContents.setLayout(self.eventLayoutArea)
+
+        self.eventDataLayoutArea = QtWidgets.QVBoxLayout(self.eventDataScrollAreaWidgetContent)
+        self.eventDataLayoutArea.addItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
         self.eventDataScrollArea.setWidget(self.eventDataScrollAreaWidgetContent)
 
-    def create_event_layout_group(self, riot_event):
-        self.sgroupbox_events = QtWidgets.QGroupBox("Events:", self)
-        self.layout_events_groupbox = QtWidgets.QVBoxLayout(self.sgroupbox_events)
-        # eventPushButtonAction = QtWidgets.QPushButton(riot_event["event_name"], sgroupbox)
-        # # eventPushButtonAction.setObjectName("eventPushButton")
-        # layout_groupbox.addWidget(eventPushButtonAction)
-        # eventPushButtonAction.clicked.connect( lambda event_clicked: self._eventActionSlot(riot_event))
-
-    def create_eventData_layout_group(self, riot_event):
-        self.sgroupbox_eventData = QtWidgets.QGroupBox("Event Data:", self)
-        self.layout_eventData_groupbox = QtWidgets.QVBoxLayout(self.sgroupbox_eventData)
-        event_data = QtWidgets.QLabel(riot_event["event_data"])
-        self.layout_eventData_groupbox.addWidget(event_data)
-        self.layout_eventData_groupbox.addStretch(1)
-
-    def create_event_button(self, riot_event):
-        self.riot_event_counter += 1
-        # row = QtWidgets.QHBoxLayout()
-        eventPushButtonAction = QtWidgets.QPushButton("Event {}".format(self.riot_event_counter), self.sgroupbox_events)
+    def create_button(self, riot_event):
+        count = self.eventsLayoutArea.count() - 1 # -1 is to make place the buttons from the top
+        groupbox_events = QtWidgets.QGroupBox("".format(count), self.eventsScrollArea)
+        self.eventsLayoutArea.insertWidget(count, groupbox_events)
+        gridLayout = QtWidgets.QGridLayout(groupbox_events)
+        eventPushButtonAction = QtWidgets.QPushButton("Event {}".format(count+1), groupbox_events)
+        gridLayout.addWidget(eventPushButtonAction, 0, 0, 1, 1)
         eventPushButtonAction.clicked.connect(lambda event_clicked: self._eventActionSlot(riot_event))
-        # eventPushButtonAction.setObjectName("eventPushButton")
-        # row.addWidget(eventPushButtonAction)
-        # self.layout_events_groupbox.layout().addLayout(row)
-        self.layout_events_groupbox.addWidget(eventPushButtonAction)
-        self.layout_events_groupbox.addStretch(1)
-        self.eventsScrollAreaWidgetContents.setLayout(self.eventsLayoutArea)
+
+
+    def show_eventData_layout_group(self, riot_event):
+        count = self.eventDataLayoutArea.count() - 1
+        groupbox_eventData = QtWidgets.QGroupBox("Event Data:", self.eventDataScrollArea)
+        self.eventDataLayoutArea.insertWidget(count, groupbox_eventData)
+        gridLayout = QtWidgets.QGridLayout(groupbox_eventData)
+        # self.layout_eventData_groupbox = QtWidgets.QVBoxLayout(groupbox_eventData)
+        event_data = QtWidgets.QLabel(riot_event["event_data"])
+        gridLayout.addWidget(event_data, 0, 0, 1, 1)
+        # self.layout_eventData_groupbox.addWidget(event_data)
+        # self.layout_eventData_groupbox.addStretch(1)
 
 
     def _startActionSlot(self):
+
         print("start")
 
     def _addEventsToolBarActionSlot(self, riot_event):
         self.create_event_layout_container()
-        self.create_event_layout_group(riot_event)
-        self.eventsLayoutArea.addWidget(self.sgroupbox_events)
+        # self.create_event_layout_group(riot_event)
+        # self.eventsLayoutArea.addWidget(self.sgroupbox_events)
 
     def _showEventData(self, riot_event):
         self.create_eventData_layout_container()
-        self.create_eventData_layout_group(riot_event)
-        self.eventDataLayoutArea.addWidget(self.sgroupbox_eventData)
+        self.show_eventData_layout_group(riot_event)
+        # self.eventDataLayoutArea.addWidget(self.sgroupbox_eventData)
 
         # pass
     def _eventActionSlot(self, riot_event):
@@ -101,7 +105,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         Connect widgets to slots
         """
         # menuToolBar connections
-        self.uiHomePageAction.triggered.connect(self._startActionSlot)
+        event1 = {
+            "event_name": "Event {}".format(self.riot_event_counter + 1),
+            "event_data": "Event number: {}\nDate: 4.8.2021 12:36".format(self.riot_event_counter)
+        }
+        self.uiHomePageAction.triggered.connect(lambda event_add: self.create_button(event1))
         # self.scrollArea.aboutToShow.connect(self._addEventsForEventToolBarActionSlot)
 
 
