@@ -1,10 +1,6 @@
-import sys
-import os
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtMultimedia, QtMultimediaWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets
+
 from main_window_ui import Ui_MainWindow
-from video_thread import VideoThread, VideoApp
-import numpy as np
-import cv2
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -21,7 +17,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def creadVideoThreadWidget(self):
-        self.video_output = VideoApp()
+        # self.video_output = VideoApp()
+        # update widget
+        pixmap = QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_fire.png')
+        self.video_label.setPixmap(pixmap)
+        self.resize(pixmap.width(), pixmap.height())
 
     def create_event_layout_container(self):
         self.eventsLayoutArea = QtWidgets.QVBoxLayout(self.eventsScrollAreaWidgetContents)
@@ -34,7 +34,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         groupbox_events = QtWidgets.QGroupBox("".format(count), self.eventsScrollArea)
         self.eventsLayoutArea.insertWidget(count, groupbox_events)
         gridLayout = QtWidgets.QGridLayout(groupbox_events)
-        eventPushButtonAction = QtWidgets.QPushButton("Event {}".format(count + 1))
+        eventPushButtonAction = QtWidgets.QPushButton("Event {}".format(count))
         gridLayout.addWidget(eventPushButtonAction, 0, 0, 1, 1)
         data_text = self._showEventData(riot_event)
         eventPushButtonAction.clicked.connect(lambda: self.event_data.setText(data_text))
