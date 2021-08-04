@@ -7,6 +7,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 import sys
 from main_window_ui import Ui_MainWindow
 from main_window import MainWindow
+from colabreq import ColabRequestClass
+from intervals import IntervalsClass
 
 def main():
     # parser = argparse.ArgumentParser()
@@ -25,6 +27,10 @@ def start():
     # mainwindow = MainWindow()
     # mainwindow.show()
 
+    p1 = IntervalsClass(3, True, True, True)
+    p1.startIntervals()
+    #ColabRequestClass.sendPicture("sdfsdfsdfsdf")
+    #ColabRequestClass.checkNotification()
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
     mainwindow = MainWindow()
