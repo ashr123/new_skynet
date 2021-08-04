@@ -61,7 +61,28 @@ class Ui_MainWindow(object):
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiHomePageAction.setIcon(icon12)
         self.uiHomePageAction.setObjectName("logo")
-        # self.uihomePageAction.setCheckable(True)
+
+        ######## secound button
+        self.uiHome2PageAction = QtWidgets.QAction(self.uiCentralWidget)
+        icon122 = QtGui.QIcon(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png')
+        icon122.addPixmap(QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+                         QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon122.addPixmap(QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.uiHome2PageAction.setIcon(icon122)
+        self.uiHome2PageAction.setObjectName("logo")
+
+        ######## third button
+        self.uiHome3PageAction = QtWidgets.QAction(self.uiCentralWidget)
+        icon123 = QtGui.QIcon(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png')
+        icon123.addPixmap(
+            QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+            QtGui.QIcon.Active, QtGui.QIcon.Off)
+        icon123.addPixmap(
+            QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.uiHome3PageAction.setIcon(icon123)
+        self.uiHome3PageAction.setObjectName("logo")
 
         # self.pushButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
         # self.pushButton.setGeometry(QtCore.QRect(60, 80, 201, 31))
@@ -73,6 +94,8 @@ class Ui_MainWindow(object):
         self.addToolBar(QtCore.Qt.TopToolBarArea, self.uiToolBar)
         #add button functionality
         self.uiToolBar.addAction(self.uiHomePageAction)
+        self.uiToolBar.addAction(self.uiHome2PageAction)
+        self.uiToolBar.addAction(self.uiHome3PageAction)
         self.uiToolBar.addSeparator()
 
         ######### events scroll area
@@ -88,6 +111,11 @@ class Ui_MainWindow(object):
         self.eventsScrollAreaWidgetContents.setObjectName("eventsScrollAreaWidgetContents")
         self.eventsScrollArea.setFocusPolicy(QtCore.Qt.NoFocus)
 
+        self.eventsLayoutArea = QtWidgets.QVBoxLayout(self.eventsScrollAreaWidgetContents)
+        self.eventsLayoutArea.addItem(
+            QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
+        self.eventsScrollArea.setWidget(self.eventsScrollAreaWidgetContents)
+
         ########### event data scroll area
         self.eventDataScrollArea = QtWidgets.QScrollArea(self.uiCentralWidget)
         # self.eventDataScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -100,6 +128,20 @@ class Ui_MainWindow(object):
         self.eventDataScrollAreaWidgetContent.setGeometry(QtCore.QRect(0, 0, 309, 549))
         self.eventDataScrollAreaWidgetContent.setObjectName("eventDataScrollAreaWidgetContent")
         self.eventDataScrollArea.setFocusPolicy(QtCore.Qt.NoFocus)
+
+        self.eventDataLayoutArea = QtWidgets.QVBoxLayout(self.eventDataScrollAreaWidgetContent)
+        self.eventDataLayoutArea.addItem(
+            QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
+        self.eventDataScrollArea.setWidget(self.eventDataScrollAreaWidgetContent)
+
+        count = self.eventDataLayoutArea.count() - 1
+        groupbox_eventData = QtWidgets.QGroupBox("Event Data:", self.eventDataScrollArea)
+        self.eventDataLayoutArea.insertWidget(count, groupbox_eventData)
+        gridLayout = QtWidgets.QGridLayout(groupbox_eventData)
+        self.event_data = QtWidgets.QLabel("", groupbox_eventData)
+        gridLayout.addWidget(self.event_data, 0, 0, 1, 1)
+        self.event_data.hide()
+
 
 
         ##### making the video player
@@ -119,6 +161,8 @@ class Ui_MainWindow(object):
         # self.eventToolBar.setText(_translate("eventToolBar", "eventToolBar"))
         # self.uiToolBar.setText(_translate("uiToolBar", "menuToolBar"))
         self.uiHomePageAction.setText(_translate("logo", "Riot-AI"))
+        self.uiHome2PageAction.setText(_translate("logo", "Riot-AI"))
+        self.uiHome3PageAction.setText(_translate("logo", "Riot-AI"))
         # self.logo.setText(_translate("MainWindow", "Riot-AI"))
 
 from PyQt5.QtMultimediaWidgets import QVideoWidget
