@@ -1,17 +1,16 @@
 #!/usr/bin/python3
-import requests
-import json
-import time
-import cv2
+import os
 import threading
-import os, sys
-from colabreq import ColabRequestClass
-#from files import FilesClass
+
+import cv2
+
+
+# from files import FilesClass
 
 class CameraClass():
     FPS = 1
 
-    def __init__(self, fps = 30, pipe = 'bunny.mp4'):
+    def __init__(self, fps=30, pipe='bunny.mp4'):
         print('loading CameraClass')
         self._pipe = pipe
         self._fps = fps
@@ -34,8 +33,8 @@ class CameraClass():
     def get_picture(self):
         self._frameId = self._frameId + 1
         img = self.read_frame()
-        if self._frameId % 10 == 0:
-            self.save_picture(img, self._frameId)
+        # if self._frameId % 10 == 0:
+        #   self.save_picture(img, self._frameId)
         retval, jpg = cv2.imencode('.jpg', img)
         if not retval:
             raise RuntimeError('Could not encode img to JPEG')

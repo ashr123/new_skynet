@@ -5,6 +5,7 @@ from threading import Thread
 from colabreq import ColabRequestClass
 from new_skynet.camera4 import CameraClass
 
+
 class IntervalsClass():
     def __init__(self, intervalTime, notifications, camera, picture, window):
         print('loading IntervalsClass')
@@ -35,8 +36,8 @@ class IntervalsClass():
         try:
             picture, frameId = self.cameraHandler.get_picture()
             self.updateVideoInUI(picture)
-            if self.cameraHandler._frameId % self.cameraHandler._fps == 0:
-                pictureResult = ColabRequestClass.sendPicture(picture, frameId)
+            # if self.cameraHandler._frameId % self.cameraHandler._fps == 0:
+        #                pictureResult = ColabRequestClass.sendPicture(picture, frameId)
         except (IOError, ConnectionError):
             print("error getting picture result")
         self.doPicture()

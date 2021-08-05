@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from main_window_ui import Ui_MainWindow
@@ -40,8 +42,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         gridLayout = QtWidgets.QGridLayout(groupbox_events)
         eventPushButtonAction = QtWidgets.QPushButton("Event {}".format(count))
         gridLayout.addWidget(eventPushButtonAction, 0, 0, 1, 1)
-        data_text = self._showEventData(riot_event)
-        eventPushButtonAction.clicked.connect(lambda: self.event_data.setText(data_text))
+        # data_text = self._showEventData(riot_event)
+        eventPushButtonAction.clicked.connect(lambda: self.update_button_event_data(count, riot_event))
+
+    def update_button_event_data(self, count, riot_event):
+        # datetime object containing current date and time
+        now = datetime.now()
+        # dd/mm/YY H:M:S
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        frame_id = riot_event["frameId"]
+        data_text = "Event {}\nDate: {}\nFrame ID: {}".format(count, dt_string, frame_id)
+        self.event_data.setText(data_text)
+        # image = QtGui.QImage(riot_event["image"], riot_event["img"].shape[1], riot_event["img"].shape[0], QtGui.QImage.Format_RGB888)
+        frame_path = r''
+        event_pixmap = QtGui.QPixmap(image)
+        self.event_img_label.setPixmap(event_pixmap)
 
     def _startActionSlot(self):
         self.event_data.hide()
@@ -65,9 +80,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "event_name": "Event {}".format(self.riot_event_counter + 2),
             "event_data": "Event number: {}\nDate: 4.8.2021 20:36".format(self.riot_event_counter)
         }
-        self.uiHomePageAction.triggered.connect(lambda: self.create_button(event1))
-        self.uiHome2PageAction.triggered.connect(lambda: self.create_button(event2))
-        self.uiHome3PageAction.triggered.connect(self.creadVideoThreadWidget)
+        # self.uiHomePageAction.triggered.connect(lambda: self.create_button(event1))
+        # self.uiHome2PageAction.triggered.connect(lambda: self.create_button(event2))
+        # self.uiHome3PageAction.triggered.connect(self.creadVideoThreadWidget)
         # self.scrollArea.aboutToShow.connect(self._addEventsForEventToolBarActionSlot)
 
         # eventToolBar connections

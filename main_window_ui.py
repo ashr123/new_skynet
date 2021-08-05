@@ -48,29 +48,29 @@ class Ui_MainWindow(object):
         self.uiHomePageAction.setIcon(icon12)
         self.uiHomePageAction.setObjectName("logo")
 
-        ######## secound button
-        self.uiHome2PageAction = QtWidgets.QAction(self.uiCentralWidget)
-        icon122 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
-        icon122.addPixmap(
-            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
-            QtGui.QIcon.Active, QtGui.QIcon.Off)
-        icon122.addPixmap(
-            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
-            QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.uiHome2PageAction.setIcon(icon122)
-        self.uiHome2PageAction.setObjectName("logo")
+        # ######## secound button
+        # self.uiHome2PageAction = QtWidgets.QAction(self.uiCentralWidget)
+        # icon122 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
+        # icon122.addPixmap(
+        #     QtGui.QPixmap(RIOT_AI_SCULL_PNG),
+        #     QtGui.QIcon.Active, QtGui.QIcon.Off)
+        # icon122.addPixmap(
+        #     QtGui.QPixmap(RIOT_AI_SCULL_PNG),
+        #     QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        # self.uiHome2PageAction.setIcon(icon122)
+        # self.uiHome2PageAction.setObjectName("logo")
 
-        ######## third button
-        self.uiHome3PageAction = QtWidgets.QAction(self.uiCentralWidget)
-        icon123 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
-        icon123.addPixmap(
-            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
-            QtGui.QIcon.Active, QtGui.QIcon.Off)
-        icon123.addPixmap(
-            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
-            QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.uiHome3PageAction.setIcon(icon123)
-        self.uiHome3PageAction.setObjectName("logo")
+        # ######## third button
+        # self.uiHome3PageAction = QtWidgets.QAction(self.uiCentralWidget)
+        # icon123 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
+        # icon123.addPixmap(
+        #     QtGui.QPixmap(RIOT_AI_SCULL_PNG),
+        #     QtGui.QIcon.Active, QtGui.QIcon.Off)
+        # icon123.addPixmap(
+        #     QtGui.QPixmap(RIOT_AI_SCULL_PNG),
+        #     QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        # self.uiHome3PageAction.setIcon(icon123)
+        # self.uiHome3PageAction.setObjectName("logo")
 
         self.uiToolBar = QtWidgets.QToolBar(self.uiCentralWidget)
         self.uiToolBar.setIconSize(QtCore.QSize(70, 40))
@@ -78,8 +78,8 @@ class Ui_MainWindow(object):
         self.addToolBar(QtCore.Qt.TopToolBarArea, self.uiToolBar)
         # add button functionality
         self.uiToolBar.addAction(self.uiHomePageAction)
-        self.uiToolBar.addAction(self.uiHome2PageAction)
-        self.uiToolBar.addAction(self.uiHome3PageAction)
+        # self.uiToolBar.addAction(self.uiHome2PageAction)
+        # self.uiToolBar.addAction(self.uiHome3PageAction)
         self.uiToolBar.addSeparator()
 
         ######### events scroll area
@@ -124,8 +124,16 @@ class Ui_MainWindow(object):
         self.eventDataLayoutArea.insertWidget(count, groupbox_eventData)
         gridLayout = QtWidgets.QGridLayout(groupbox_eventData)
         self.event_data = QtWidgets.QLabel("", groupbox_eventData)
-        gridLayout.addWidget(self.event_data, 0, 0, 1, 1)
-        self.event_data.hide()
+        # image = QtGui.QImage(picture, picture.shape[1], picture.shape[0], QtGui.QImage.Format_RGB888)
+        event_pixmap = QtGui.QPixmap(RIOT_AI_SCULL_PNG)
+        self.event_img_label = QtWidgets.QLabel()
+        self.event_img_label.setPixmap(event_pixmap.scaled(self.eventDataScrollAreaWidgetContent.width() - 50,
+                                                           self.eventDataScrollAreaWidgetContent.height() - 50,
+                                                           QtCore.Qt.KeepAspectRatio))
+        self.event_img_label.adjustSize()
+        gridLayout.addWidget(self.event_data, 0, 0)
+        gridLayout.addWidget(self.event_img_label, 1, 0)
+        # self.event_data.hide()
 
         ##### making the video player
         ########### event data scroll area
@@ -137,7 +145,7 @@ class Ui_MainWindow(object):
         video_pixmap = QtGui.QPixmap(AI_FIRE_PNG)
         self.video_label.setPixmap(video_pixmap)
         self.LayoutArea.insertWidget(1, self.video_label)
-        self.video_label.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.video_label.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         self.video_label.setAlignment(QtCore.Qt.AlignCenter)
 
         self.retranslateUi()
@@ -150,8 +158,8 @@ class Ui_MainWindow(object):
         # self.eventToolBar.setText(_translate("eventToolBar", "eventToolBar"))
         # self.uiToolBar.setText(_translate("uiToolBar", "menuToolBar"))
         self.uiHomePageAction.setText(_translate("logo", "Riot-AI"))
-        self.uiHome2PageAction.setText(_translate("logo", "Riot-AI"))
-        self.uiHome3PageAction.setText(_translate("logo", "Riot-AI"))
+        # self.uiHome2PageAction.setText(_translate("logo", "Riot-AI"))
+        # self.uiHome3PageAction.setText(_translate("logo", "Riot-AI"))
         # self.logo.setText(_translate("MainWindow", "Riot-AI"))
 
 # if __name__ == "__main__":

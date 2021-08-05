@@ -1,12 +1,16 @@
 #!/usr/bin/python3
-import requests
+import base64
 import json
 import os
-import base64
+
+import requests
+
 
 class ColabRequestClass():
-    colabUrl=None
-    def __init__(self):
+    colabUrl = None
+
+    def __init__(self, mainwindow):
+        self.mainwindow = mainwindow
         colabUrl = ColabRequestClass.getColabURL()
         print('loading ColabRequestClass')
 
@@ -53,6 +57,7 @@ class ColabRequestClass():
             if result.ok == True and result.status_code == 200:
                 resultJson = json.loads(result.text)
                 answer = resultJson['answer']
+                ColabRequestClass.mainwindow.create_button(answer)
                 #todo: do something with "answer"
                 print(answer)
                 return answer
