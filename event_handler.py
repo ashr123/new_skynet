@@ -1,10 +1,5 @@
-import sys
-import os
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt, QtMultimedia, QtMultimediaWidgets
-from main_window_ui import Ui_MainWindow
-from video_thread import VideoThread, App
-import numpy as np
-import cv2
+from PyQt5 import QtCore, QtWidgets
+
 
 class Eventandler(QtWidgets.QPushButton):
     def __init__(self, main_window, riot_event, layout_groupbox, sgroupbox):

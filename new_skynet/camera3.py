@@ -1,23 +1,18 @@
 #!/usr/bin/python3
-import cv2
-import threading
+import asyncio
 import http
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
+import sys
+import threading
+import time
+import urllib.parse as urlparse
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
-import time
-import sys, os, base64, datetime, hashlib, hmac
-import boto3
-import requests
-from aws_requests_auth.aws_auth import AWSRequestsAuth
-from aws_requests_auth.boto_utils import BotoAWSRequestsAuth
-import urllib.parse as urlparse
 from urllib.parse import parse_qs
-import asyncio
-import websockets #server
-import websocket #client
-import json
 
+import cv2
+import requests
+import websocket  # client
 
 FPS = 1
 HOST, PORT = "localhost", 8080
@@ -49,7 +44,8 @@ class ECamHandler(BaseHTTPRequestHandler):
         transactionId = (parse_qs(parsed.query)['transactionId'])[0]
 
         connectionURL = (
-            'https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test?transactionId={}&type={}&amount={}').format(transactionId, amount, type)
+            'https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test?transactionId={}&type={}&amount={}').format(
+            transactionId, amount, type)
 
         response = requests.get(connectionURL)
         self.send_response(http.HTTPStatus.OK)
@@ -70,7 +66,7 @@ class ECamHandler(BaseHTTPRequestHandler):
             self.createRequest(self.path)
 
         elif self.path.startswith('/testWS'):
-            if(serverSocket):
+            if (serverSocket):
                 asyncio.get_event_loop().run_until_complete(self.createWSRequest())
 
         elif self.path.endswith('.mjpg'):
@@ -159,6 +155,7 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
         except KeyboardInterrupt:
             self._camera.release()
 
+
 def on_open(ws):
     print('websocket opened')
     createWSRequest(ws)
@@ -169,16 +166,20 @@ def on_open(ws):
     createWSRequest(ws)
     createWSRequest(ws)
 
+
 def on_error(ws, error):
     print('websocket error')
     print(error)
+
 
 def on_message(ws, message):
     print('websocket message')
     print(message)
 
+
 def on_close(ws, close_status_code, close_msg):
     print('websocket closed')
+
 
 def connectWS():
     uri = "wss://5uhy9pq6qc.execute-api.us-east-1.amazonaws.com/production"
@@ -192,10 +193,11 @@ def connectWS():
     ws.run_forever()
     #
     #
-    #https://5uhy9pq6qc.execute-api.us-east-1.amazonaws.com/production/@connections
-    #global serverSocket
-    #serverSocket = await websockets.connect(uri)
-    #await createWSRequest()
+    # https://5uhy9pq6qc.execute-api.us-east-1.amazonaws.com/production/@connections
+    # global serverSocket
+    # serverSocket = await websockets.connect(uri)
+    # await createWSRequest()
+
 
 def createWSRequest(ws):
     msgToSend = json.dumps({
@@ -207,17 +209,19 @@ def createWSRequest(ws):
         msgToSend
     )
 
-#async with websockets.connect(uri) as websocket:
+
+# async with websockets.connect(uri) as websocket:
 #   return
-#name = "Israels client"
+# name = "Israels client"
 
-#await websocket.send(name)
-#print(f"> {name}")
+# await websocket.send(name)
+# print(f"> {name}")
 
-#greeting = await websocket.recv()
-#print(f"< {greeting}")
+# greeting = await websocket.recv()
+# print(f"< {greeting}")
 
 serverSocket = False
+
 
 async def main():
     if (len(sys.argv) > 1):
@@ -230,15 +234,12 @@ async def main():
         # pipe = 0
         pipe = 'bunny.mp4'
 
-
-    #server = ThreadedHTTPServer(pipe, (HOST, PORT), ECamHandler)
+    # server = ThreadedHTTPServer(pipe, (HOST, PORT), ECamHandler)
     connectWS()
-    #asyncio.get_event_loop().run_until_complete(connectWS(server))
+    # asyncio.get_event_loop().run_until_complete(connectWS(server))
 
     print("server started")
-    #server.serve_forever()
-
-
+    # server.serve_forever()
 
 
 # s3 = boto3.resource('s3')
@@ -251,5 +252,5 @@ async def main():
 
 
 if __name__ == '__main__':
-    #main()
+    # main()
     asyncio.get_event_loop().run_until_complete(main())

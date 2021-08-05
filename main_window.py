@@ -1,11 +1,17 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from intervals import IntervalsClass
 from main_window_ui import Ui_MainWindow
+
+AI_FIRE_PNG = r'img/riot_ai_fire.png'
+RIOT_AI_SCULL_PNG = r'img/riot_ai_scull.png'
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
+        p1 = IntervalsClass(3, True, True, True)
+        p1.startIntervals()
         self.setupUi()
         self.currentEvents = []
         self.riot_event_counter = 0
@@ -15,13 +21,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self._connections()
 
-
     def creadVideoThreadWidget(self):
         # self.video_output = VideoApp()
         # update widget
-        pixmap = QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_fire.png')
-        self.video_label.setPixmap(pixmap)
-        self.resize(pixmap.width(), pixmap.height())
+        print("scull")
+        video_pixmap = QtGui.QPixmap(RIOT_AI_SCULL_PNG)
+        self.video_label.setPixmap(video_pixmap)
+        # self.resize(pixmap.width(), pixmap.height())
 
     def create_event_layout_container(self):
         self.eventsLayoutArea = QtWidgets.QVBoxLayout(self.eventsScrollAreaWidgetContents)
@@ -38,7 +44,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         gridLayout.addWidget(eventPushButtonAction, 0, 0, 1, 1)
         data_text = self._showEventData(riot_event)
         eventPushButtonAction.clicked.connect(lambda: self.event_data.setText(data_text))
-
 
     def _startActionSlot(self):
         self.event_data.hide()
@@ -63,7 +68,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         }
         self.uiHomePageAction.triggered.connect(lambda: self.create_button(event1))
         self.uiHome2PageAction.triggered.connect(lambda: self.create_button(event2))
-        self.uiHome3PageAction.triggered.connect(lambda: self._startActionSlot)
+        self.uiHome3PageAction.triggered.connect(self.creadVideoThreadWidget)
         # self.scrollArea.aboutToShow.connect(self._addEventsForEventToolBarActionSlot)
 
         # eventToolBar connections

@@ -1,13 +1,13 @@
-from threading import Thread
-from time import sleep
-
-#!/usr/bin/python3
-import requests
-import json
+# !/usr/bin/python3
 import time
+from threading import Thread
+
+from PyQt5.QtCore import QThread
+
 from colabreq import ColabRequestClass
 
-class IntervalsClass():
+
+class IntervalsClass(QThread):
     def __init__(self, intervalTime, notifications, camera, picture):
         print('loading IntervalsClass')
         self.intervalTime = intervalTime

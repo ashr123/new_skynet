@@ -1,16 +1,14 @@
 import json
-import os
 import time
-import requests  # Import the requests library
-import urllib.request
 import urllib.error
-import asyncio
-import threading
-# flask_ngrok_example.py
-from flask import Flask, render_template, request, url_for, jsonify
-from flask_ngrok import run_with_ngrok
+import urllib.request
 from threading import Thread
 from time import sleep
+
+import requests  # Import the requests library
+# flask_ngrok_example.py
+from flask import Flask, request, jsonify
+from flask_ngrok import run_with_ngrok
 
 
 def threaded_function():
@@ -42,7 +40,10 @@ def checkMyAddress():
         checkMyAddress()
     else:
         # Website is up
-        ngrokURI = !curl - -silent - -show - error http://127.0.0.1:4040/api/tunnels | sed - nE
+        ngrokURI = !curl - -silent - -show - error
+        http: // 127.0
+        .0
+        .1: 4040 / api / tunnels | sed - nE
         's/.*public_url":"https:..([^"]*).*/\1/p'
         ngrokURI = """http://{}""".format(ngrokURI[0])
         print(ngrokURI)

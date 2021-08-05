@@ -1,10 +1,11 @@
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
-from PyQt5.QtGui import QPixmap
 import sys
+
 import cv2
-from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
 import numpy as np
+from PyQt5 import QtGui
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QThread
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QWidget, QApplication, QLabel, QVBoxLayout
 
 
 class VideoThread(QThread):
@@ -74,6 +75,7 @@ class VideoApp(QWidget):
         convert_to_Qt_format = QtGui.QImage(rgb_image.data, w, h, bytes_per_line, QtGui.QImage.Format_RGB888)
         p = convert_to_Qt_format.scaled(self.disply_width, self.display_height, Qt.KeepAspectRatio)
         return QPixmap.fromImage(p)
+
 
 #
 if __name__ == "__main__":

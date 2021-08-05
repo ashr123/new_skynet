@@ -22,28 +22,12 @@ class Ui_MainWindow(object):
         self.resize(1356, 695)
         # Setting contextMenuPolicy
         self.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
-        # MainWindow.setDockOptions(QtWidgets.QMainWindow.AllowTabbedDocks | QtWidgets.QMainWindow.AnimatedDocks)
-        # MainWindow.setStyleSheet("#toolBar_Devices QToolButton {\n"
-        #                          "width: 50px;\n"
-        #                          "height: 55px;\n"
-        #                          "border:solid 1px black opacity 0.4;\n"
-        #                          "background-none;\n"
-        #                          "}\n"
-        #                          "\n"
-        #                          "#toolBar_General QToolButton {\n"
-        #                          "width: 36px;\n"
-        #                          "height: 36px;\n"
-        #                          "border:solid 1px black opacity 0.4;\n"
-        #                          "background-none;\n"
-        #                          "}\n"
-        #                          "\n"
-        #                          "")
+
         self.uiCentralWidget = QtWidgets.QWidget()
         # self.uiCentralWidget = QtWidgets.QLabel("Hello, World")
         # self.uiCentralWidget.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.uiCentralWidget.setObjectName("uiCentralWidget")
         self.setCentralWidget(self.uiCentralWidget)
-
         self.setWindowModality(QtCore.Qt.NonModal)
 
         ####### adding a menu bar
@@ -88,10 +72,6 @@ class Ui_MainWindow(object):
         self.uiHome3PageAction.setIcon(icon123)
         self.uiHome3PageAction.setObjectName("logo")
 
-        # self.pushButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
-        # self.pushButton.setGeometry(QtCore.QRect(60, 80, 201, 31))
-        # self.pushButton.setObjectName("pushButton")
-
         self.uiToolBar = QtWidgets.QToolBar(self.uiCentralWidget)
         self.uiToolBar.setIconSize(QtCore.QSize(70, 40))
         self.uiToolBar.setObjectName("menuToolBar")
@@ -106,7 +86,7 @@ class Ui_MainWindow(object):
         self.eventsScrollArea = QtWidgets.QScrollArea(self.uiCentralWidget)
         self.eventsScrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.eventsScrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        # (width,height_top ,width, height_bottom)
+        # setGeometry(left, top, width, height)
         self.eventsScrollArea.setGeometry(QtCore.QRect(1205, -2, 150, 625))
         self.eventsScrollArea.setWidgetResizable(True)
         self.eventsScrollArea.setObjectName("eventsScrollArea")
@@ -149,19 +129,16 @@ class Ui_MainWindow(object):
 
         ##### making the video player
         ########### event data scroll area
-        self.videoFormLayout = QtWidgets.QFormLayout(self.uiCentralWidget)
-        # setGeometry(left, top, width, height)
-        self.videoFormLayout.setGeometry(QtCore.QRect(100, 500, 100, 100))
-        # self.videoFormLayout.setWidgetResizable(True)
-        self.videoFormLayout.setObjectName("videoFormLayout")
-
+        self.ScrollArea = QtWidgets.QScrollArea(self.uiCentralWidget)
+        self.ScrollArea.setGeometry(QtCore.QRect(0, -2, 780, 625))
+        self.LayoutArea = QtWidgets.QVBoxLayout(self.ScrollArea)
+        self.LayoutArea.setGeometry(QtCore.QRect(0, -2, 780, 625))
         self.video_label = QtWidgets.QLabel()
         video_pixmap = QtGui.QPixmap(AI_FIRE_PNG)
         self.video_label.setPixmap(video_pixmap)
-        self.video_label.setGeometry(QtCore.QRect(0, 0, 100, 100))
-        # self.video_label.move(150, 150)
-        self.videoFormLayout.addWidget(self.video_label)
-        self.setLayout(self.videoFormLayout)
+        self.LayoutArea.insertWidget(1, self.video_label)
+        self.video_label.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.video_label.setAlignment(QtCore.Qt.AlignCenter)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)

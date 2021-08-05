@@ -1,6 +1,9 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
 import logging
+
+from PyQt5 import QtWidgets
+
 log = logging.getLogger(__name__)
+
 
 def sip_is_deleted(obj):
     """
@@ -10,21 +13,23 @@ def sip_is_deleted(obj):
         return True
     return False
 
+
 def qslot(func):
     """
     Decorated slot are protected against already destroyed element
     in SIP but not in Python
     """
+
     def func_wrapper(*args, **kwargs):
         if len(args) > 0:
             if sip_is_deleted(args[0]):
                 return lambda: True
         return func(*args, **kwargs)
+
     return func_wrapper
 
 
 class EventSummaryView(QtWidgets.QTreeWidget):
-
     """
     Topology summary view implementation.
     :param parent: parent widget

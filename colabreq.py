@@ -1,10 +1,13 @@
 #!/usr/bin/python3
-import requests
 import json
 import os
 
+import requests
+
+
 class ColabRequestClass():
-    colabUrl=None
+    colabUrl = None
+
     def __init__(self):
         colabUrl = ColabRequestClass.getColabURL()
         print('loading ColabRequestClass')
@@ -27,24 +30,24 @@ class ColabRequestClass():
 
     @staticmethod
     def sendPicture(picture):
-        #testing upload address post
-        #data = {'ngrokAddr': "blabla"}
-        #data = json.dumps(data)
-        #r = requests.post('https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test', data)
-        #test = json.loads(r.text)
-        #colabUrl = ColabRequestClass.getColabURL()
+        # testing upload address post
+        # data = {'ngrokAddr': "blabla"}
+        # data = json.dumps(data)
+        # r = requests.post('https://lpn4b8754e.execute-api.us-east-1.amazonaws.com/test/test', data)
+        # test = json.loads(r.text)
+        # colabUrl = ColabRequestClass.getColabURL()
         if ColabRequestClass.colabUrl == None:
             return None
         fullLink = """{}/sendPicture""".format(ColabRequestClass.colabUrl)
         data = {'picture': picture}
         data = json.dumps(data)
         try:
-            #7 seconde timeout
+            # 7 seconde timeout
             result = requests.post(fullLink, data, 7)
             if result.ok == True and result.status_code == 200:
                 resultJson = json.loads(result.text)
                 answer = resultJson['answer']
-                #todo: do something with "answer"
+                # todo: do something with "answer"
                 print(answer)
                 return answer
             else:
@@ -56,7 +59,7 @@ class ColabRequestClass():
 
     @staticmethod
     def checkNotification():
-        #colabUrl = ColabRequestClass.getColabURL()
+        # colabUrl = ColabRequestClass.getColabURL()
         if ColabRequestClass.colabUrl == None:
             return None
         fullLink = """{}/checkNotifications""".format(ColabRequestClass.colabUrl)
