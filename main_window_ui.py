@@ -10,11 +10,14 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 # from PyQt5.QtWidgets import QMenuBar
+from PyQt5.QtCore import QObject
+
+AI_FIRE_PNG = r'img/riot_ai_fire.png'
+RIOT_AI_SCULL_PNG = r'img/riot_ai_scull.png'
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QObject):
     def setupUi(self):
         self.setObjectName("MainWindow")
         self.resize(1356, 695)
@@ -36,7 +39,7 @@ class Ui_MainWindow(object):
         #                          "}\n"
         #                          "\n"
         #                          "")
-        self.uiCentralWidget = QtWidgets.QWidget(self)
+        self.uiCentralWidget = QtWidgets.QWidget()
         # self.uiCentralWidget = QtWidgets.QLabel("Hello, World")
         # self.uiCentralWidget.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         self.uiCentralWidget.setObjectName("uiCentralWidget")
@@ -45,43 +48,43 @@ class Ui_MainWindow(object):
         self.setWindowModality(QtCore.Qt.NonModal)
 
         ####### adding a menu bar
-        menuBar = QtWidgets.QMenuBar(self)
+        menuBar = QtWidgets.QMenuBar()
         self.setMenuBar(menuBar)
         # Creating menus using a title
-        fileMenu = menuBar.addMenu("&File")
-        editMenu = menuBar.addMenu("&Edit")
-        helpMenu = menuBar.addMenu("&Help")
+        # fileMenu = menuBar.addMenu("&File")
+        # editMenu = menuBar.addMenu("&Edit")
+        # helpMenu = menuBar.addMenu("&Help")
 
         ##### buttons for the uiToolBar ######
         self.uiHomePageAction = QtWidgets.QAction(self.uiCentralWidget)
-        icon12 = QtGui.QIcon(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png')
-        icon12.addPixmap(QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+        icon12 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
+        icon12.addPixmap(QtGui.QPixmap(RIOT_AI_SCULL_PNG),
                          QtGui.QIcon.Active, QtGui.QIcon.Off)
-        icon12.addPixmap(QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+        icon12.addPixmap(QtGui.QPixmap(RIOT_AI_SCULL_PNG),
                          QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiHomePageAction.setIcon(icon12)
         self.uiHomePageAction.setObjectName("logo")
 
         ######## secound button
         self.uiHome2PageAction = QtWidgets.QAction(self.uiCentralWidget)
-        icon122 = QtGui.QIcon(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png')
+        icon122 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
         icon122.addPixmap(
-            QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
             QtGui.QIcon.Active, QtGui.QIcon.Off)
         icon122.addPixmap(
-            QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
             QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiHome2PageAction.setIcon(icon122)
         self.uiHome2PageAction.setObjectName("logo")
 
         ######## third button
         self.uiHome3PageAction = QtWidgets.QAction(self.uiCentralWidget)
-        icon123 = QtGui.QIcon(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png')
+        icon123 = QtGui.QIcon(RIOT_AI_SCULL_PNG)
         icon123.addPixmap(
-            QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
             QtGui.QIcon.Active, QtGui.QIcon.Off)
         icon123.addPixmap(
-            QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_scull.png'),
+            QtGui.QPixmap(RIOT_AI_SCULL_PNG),
             QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.uiHome3PageAction.setIcon(icon123)
         self.uiHome3PageAction.setObjectName("logo")
@@ -153,8 +156,8 @@ class Ui_MainWindow(object):
         # self.videoFormLayout.setWidgetResizable(True)
         self.videoFormLayout.setObjectName("videoFormLayout")
 
-        self.video_label = QtWidgets.QLabel(self)
-        video_pixmap = QtGui.QPixmap(r'C:\Users\Yael\Desktop\elbit\skynet_hackaton\new-skynet\img\riot_ai_fire.png')
+        self.video_label = QtWidgets.QLabel()
+        video_pixmap = QtGui.QPixmap(AI_FIRE_PNG)
         self.video_label.setPixmap(video_pixmap)
         self.video_label.setGeometry(QtCore.QRect(0, 0, 426, 625))
         self.video_label.move(150, 150)
