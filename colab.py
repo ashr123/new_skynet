@@ -12,7 +12,6 @@ from flask_ngrok import run_with_ngrok
 from threading import Thread
 from time import sleep
 
-#ngrokURI = !curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p'
 
 def threaded_function():
     sleep(10)
@@ -43,7 +42,11 @@ def checkMyAddress():
         checkMyAddress()
     else:
         # Website is up
-        ngrokURI = !curl --silent --show-error http://127.0.0.1:4040/api/tunnels | sed -nE 's/.*public_url":"https:..([^"]*).*/\1/p'
+        ngrokURI = !curl - -silent - -show - error
+        http: // 127.0
+        .0
+        .1: 4040 / api / tunnels | sed - nE
+        's/.*public_url":"https:..([^"]*).*/\1/p'
         ngrokURI = """http://{}""".format(ngrokURI[0])
         print(ngrokURI)
 
@@ -86,7 +89,7 @@ def sendPicture():
     print("""picture {} arrived""".format(frameId))
     imageBytesArray = input_json['image']
     sleep(5)
-    dictToReturn = {'answer': 'Picture result'}
+    dictToReturn = {'answer': imageBytesArray, 'frameId': frameId}
     return jsonify(dictToReturn)
 
 

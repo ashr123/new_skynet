@@ -53,6 +53,7 @@ class ColabRequestClass():
             if result.ok == True and result.status_code == 200:
                 resultJson = json.loads(result.text)
                 answer = resultJson['answer']
+
                 #todo: do something with "answer"
                 print(answer)
                 return answer
