@@ -1,12 +1,12 @@
-
-
 #!/usr/bin/python3
 import requests
 import json
 import time
 import cv2
 import threading
+import os, sys
 from colabreq import ColabRequestClass
+#from files import FilesClass
 
 class CameraClass():
     FPS = 1
@@ -34,9 +34,22 @@ class CameraClass():
     def get_picture(self):
         self._frameId = self._frameId + 1
         img = self.read_frame()
+        if self._frameId % 10 == 0:
+            self.save_picture(img, self._frameId)
         retval, jpg = cv2.imencode('.jpg', img)
         if not retval:
             raise RuntimeError('Could not encode img to JPEG')
         if self._frameId > 10000:
             self._frameId = 1
+
         return jpg, self._frameId
+
+    def save_picture(self, picture, frameId):
+       # FilesClass.save_picture(picture, frameId)
+        cameraPicsDirectory = os.path.abspath('./cameraImages/')
+        filename = """{}\\image_{}.jpg""".format(cameraPicsDirectory,frameId)
+        #filename = """image_{}.jpg""".format(frameId)
+        cv2.imwrite(filename, picture)
+
+
+
