@@ -1,6 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from intervals import IntervalsClass
 from main_window_ui import Ui_MainWindow
 
 AI_FIRE_PNG = r'img/riot_ai_fire.png'
@@ -10,8 +9,6 @@ RIOT_AI_SCULL_PNG = r'img/riot_ai_scull.png'
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        p1 = IntervalsClass(3, True, True, True)
-        p1.startIntervals()
         self.setupUi()
         self.currentEvents = []
         self.riot_event_counter = 0
@@ -21,7 +18,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self._connections()
 
-    def creadVideoThreadWidget(self):
+    def creadVideoThreadWidget(self, RIOT_AI_SCULL_PNG):
         # self.video_output = VideoApp()
         # update widget
         print("scull")

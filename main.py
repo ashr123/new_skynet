@@ -2,10 +2,9 @@ import sys
 
 from PyQt5 import QtWidgets
 
+from colabreq import ColabRequestClass
 from intervals import IntervalsClass
 from main_window import MainWindow
-from colabreq import ColabRequestClass
-
 
 if __name__ == "__main__":
     # parser = argparse.ArgumentParser()
@@ -20,13 +19,14 @@ if __name__ == "__main__":
     # mainwindow = MainWindow()
     # mainwindow.show()
     ColabRequestClass.getColabURL()
-    p1 = IntervalsClass(1, True, True, True)
-    p1.startIntervals()
 
     # ColabRequestClass.sendPicture("sdfsdfsdfsdf")
     # ColabRequestClass.checkNotification()
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
-    MainWindow().show()
+    window = MainWindow()
+    window.show()
+    p1 = IntervalsClass(1, True, True, True)
+    p1.startIntervals(window)
 
     sys.exit(app.exec_())
