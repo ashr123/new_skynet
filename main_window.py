@@ -18,11 +18,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self._connections()
 
-    def creadVideoThreadWidget(self, RIOT_AI_SCULL_PNG):
+    def creadVideoThreadWidget(self, picture):
         # self.video_output = VideoApp()
         # update widget
-        print("scull")
-        video_pixmap = QtGui.QPixmap(RIOT_AI_SCULL_PNG)
+        #video_pixmap = QtGui.QPixmap.load(RIOT_AI_SCULL_PNG)
+        image = QtGui.QImage(picture, picture.shape[1], picture.shape[0], QtGui.QImage.Format_RGB888)
+        video_pixmap = QtGui.QPixmap(image)
         self.video_label.setPixmap(video_pixmap)
         # self.resize(pixmap.width(), pixmap.height())
 
@@ -58,6 +59,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         event1 = {
             "event_name": "Event {}".format(self.riot_event_counter + 1),
             "event_data": "Event number: {}\nDate: 4.8.2021 12:36".format(self.riot_event_counter)
+
         }
         event2 = {
             "event_name": "Event {}".format(self.riot_event_counter + 2),

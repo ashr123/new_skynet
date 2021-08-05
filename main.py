@@ -26,7 +26,7 @@ if __name__ == "__main__":
     app.setStyle('Fusion')
     window = MainWindow()
     window.show()
-    p1 = IntervalsClass(1, True, True, True)
-    p1.startIntervals(window)
+    p1 = IntervalsClass(1, True, True, True, window)
+    p1.startIntervals()
 
     sys.exit(app.exec_())

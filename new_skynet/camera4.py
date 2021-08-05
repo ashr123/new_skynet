@@ -42,7 +42,7 @@ class CameraClass():
         if self._frameId > 10000:
             self._frameId = 1
 
-        return jpg, self._frameId
+        return img, self._frameId
 
     def save_picture(self, picture, frameId):
        # FilesClass.save_picture(picture, frameId)

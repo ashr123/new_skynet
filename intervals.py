@@ -1,26 +1,19 @@
-rom
-threading
 # !/usr/bin/python3
 import time
 from threading import Thread
 
-import Thread
-
 from colabreq import ColabRequestClass
 from new_skynet.camera4 import CameraClass
 
-
-# !/usr/bin/python3
-
-
 class IntervalsClass():
-    def __init__(self, intervalTime, notifications, camera, picture):
+    def __init__(self, intervalTime, notifications, camera, picture, window):
         print('loading IntervalsClass')
         self.intervalTime = intervalTime
         self.notifications = notifications
         self.camera = camera
         self.picture = picture
         self.cameraHandler = CameraClass(30, './new_skynet/bunny.mp4')
+        self.window = window
         #self.cameraHandler = CameraClass(30, 0)
 
     def checkForNotifications(self):
@@ -33,11 +26,11 @@ class IntervalsClass():
 
     def updateVideoInUI(self, picture):
         try:
-            print("updating UI")
+            self.window.creadVideoThreadWidget(picture)
         except (IOError, ConnectionError):
             print("error getting notification")
 
-    def doPicture(self, window):
+    def doPicture(self):
         time.sleep(self.cameraHandler._read_delay)
         try:
             picture, frameId = self.cameraHandler.get_picture()
@@ -48,10 +41,10 @@ class IntervalsClass():
             print("error getting picture result")
         self.doPicture()
 
-    def startIntervals(self, mainwindow):
+    def startIntervals(self):
         notificationsThread = Thread(target=self.checkForNotifications)
         # videoThread = Thread(target=self.updateVideoInUI)
-        doPictureThread = Thread(mainwindow, target=self.doPicture)
+        doPictureThread = Thread(target=self.doPicture)
         notificationsThread.start()
         # videoThread.start()
         doPictureThread.start()
