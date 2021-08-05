@@ -12,9 +12,10 @@ class IntervalsClass():
         self.notifications = notifications
         self.camera = camera
         self.picture = picture
-        self.cameraHandler = CameraClass(30, './new_skynet/bunny.mp4')
+        #self.cameraHandler = CameraClass(30, './new_skynet/bunny.mp4')
+        self.cameraHandler = CameraClass(30, 0)
         self.window = window
-        #self.cameraHandler = CameraClass(30, 0)
+
 
     def checkForNotifications(self):
         time.sleep(self.intervalTime*5)
@@ -35,8 +36,8 @@ class IntervalsClass():
         try:
             picture, frameId = self.cameraHandler.get_picture()
             self.updateVideoInUI(picture)
-            if self.cameraHandler._frameId % self.cameraHandler._fps == 0:
-                pictureResult = ColabRequestClass.sendPicture(picture, frameId)
+            #if self.cameraHandler._frameId % self.cameraHandler._fps == 0:
+            pictureResult = ColabRequestClass.sendPicture(picture, frameId)
         except (IOError, ConnectionError):
             print("error getting picture result")
         self.doPicture()
