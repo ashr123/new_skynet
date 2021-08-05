@@ -11,13 +11,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 # from PyQt5.QtWidgets import QMenuBar
-from PyQt5.QtCore import QObject
 
 AI_FIRE_PNG = r'img/riot_ai_fire.png'
 RIOT_AI_SCULL_PNG = r'img/riot_ai_scull.png'
 
 
-class Ui_MainWindow(QObject):
+class Ui_MainWindow(object):
     def setupUi(self):
         self.setObjectName("MainWindow")
         self.resize(1356, 695)
@@ -51,9 +50,9 @@ class Ui_MainWindow(QObject):
         menuBar = QtWidgets.QMenuBar()
         self.setMenuBar(menuBar)
         # Creating menus using a title
-        # fileMenu = menuBar.addMenu("&File")
-        # editMenu = menuBar.addMenu("&Edit")
-        # helpMenu = menuBar.addMenu("&Help")
+        fileMenu = menuBar.addMenu("&File")
+        editMenu = menuBar.addMenu("&Edit")
+        helpMenu = menuBar.addMenu("&Help")
 
         ##### buttons for the uiToolBar ######
         self.uiHomePageAction = QtWidgets.QAction(self.uiCentralWidget)
@@ -152,16 +151,17 @@ class Ui_MainWindow(QObject):
         ########### event data scroll area
         self.videoFormLayout = QtWidgets.QFormLayout(self.uiCentralWidget)
         # setGeometry(left, top, width, height)
-        self.videoFormLayout.setGeometry(QtCore.QRect(100, 500, 426, 625))
+        self.videoFormLayout.setGeometry(QtCore.QRect(100, 500, 100, 100))
         # self.videoFormLayout.setWidgetResizable(True)
         self.videoFormLayout.setObjectName("videoFormLayout")
 
         self.video_label = QtWidgets.QLabel()
         video_pixmap = QtGui.QPixmap(AI_FIRE_PNG)
         self.video_label.setPixmap(video_pixmap)
-        self.video_label.setGeometry(QtCore.QRect(0, 0, 426, 625))
-        self.video_label.move(150, 150)
+        self.video_label.setGeometry(QtCore.QRect(0, 0, 100, 100))
+        # self.video_label.move(150, 150)
         self.videoFormLayout.addWidget(self.video_label)
+        self.setLayout(self.videoFormLayout)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
